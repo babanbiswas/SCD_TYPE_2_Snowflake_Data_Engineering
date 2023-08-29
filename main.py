@@ -7,8 +7,8 @@ cur = conn.cursor()
 
 # Let's consider the below is the source data
 source_data = [
-    {'id': 1, 'name': 'John', 'address': 'Chatrabagi', 'start_date': '2023-01-01'},
-    {'id': 2, 'name': 'Jane', 'address': 'Goalbagi', 'start_date': '2022-12-23'}
+    {'id': 1, 'name': 'John', 'address': 'Chatrabagi', 'start_date': '2023-08-28'},
+    {'id': 2, 'name': 'Bob', 'address': 'Kujarbagi', 'start_date': '2022-08-28'}
 ]
 
 # Loading these records into Snowflake table
@@ -26,7 +26,7 @@ for record in source_data:
 
     # If Business_key is present in the table
     if existing_record:
-        cur.execute(f"UPDATE TABLE ELT_DB.ELT_SCHEMA.EMPLOYEE SET END_DATE = CURRENT_DATE WHERE {business_key} = %s AND END_DATE IS NULL",(record[business_key],))
+        cur.execute(f"UPDATE ELT_DB.ELT_SCHEMA.EMPLOYEE SET END_DATE = CURRENT_DATE WHERE {business_key} = %s AND END_DATE IS NULL",(record[business_key],))
         cur.execute(
             f"INSERT INTO ELT_DB.ELT_SCHEMA.EMPLOYEE ({business_key}, name, address, start_date, end_date) VALUES (%s, %s, %s, %s, %s)",
             (record[business_key], record['name'], record['address'], record['start_date'], None)
