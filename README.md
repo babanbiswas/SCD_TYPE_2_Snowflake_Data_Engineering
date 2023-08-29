@@ -1,0 +1,1 @@
+# SCD_TYPE_2_Snowflake_Data_Engineering
